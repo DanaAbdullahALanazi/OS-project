@@ -3,7 +3,7 @@ import java.util.Queue;
 
 // Q1 Scheduler class for Round-Robin scheduling
 class Q1Scheduler {
-    private Queue<PCB> queue;
+   public static Queue<PCB> queue;
     private double timeQuantum;
     private double currentTime;
 
