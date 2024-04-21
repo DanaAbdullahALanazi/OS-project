@@ -60,6 +60,39 @@ public static void main(String[] args) {
      }while(choice != 3);
 
 
+//dana//
+//call this method inside case1?
+public static void RRScheduling(List<PCB> Q1) {
+    int quantum = 3; // Time quantum for Round-Robin scheduling
+
+    double currentTime = 0;
+
+    // Queue to store processes that have arrived but not yet executed in this time slice
+    Queue<PCB> readyQueue = new LinkedList<>(Q1);
+
+    // Loop until all processes in Q1 are executed
+    while (!readyQueue.isEmpty()) {
+        PCB currentProcess = readyQueue.poll();
+
+        // Record the start time of the process
+        currentProcess.startingTime = currentTime;
+
+        // Simulate executing the process for one time quantum
+        double executionTime = Math.min(quantum, currentProcess.cpuBurstTime);
+        currentTime += executionTime;
+        currentProcess.cpuBurstTime -= executionTime;
+
+        // If the process is not finished, put it back in the ready queue
+        if (currentProcess.cpuBurstTime > 0) {
+            readyQueue.offer(currentProcess);
+        }
+
+        // Update termination time, turnaround time, waiting time
+        currentProcess.terminationTime = currentTime;
+        currentProcess.turnAroundTime = currentProcess.terminationTime - currentProcess.arrivalTime;
+        currentProcess.waitingTime = currentProcess.turnAroundTime - currentProcess.cpuBurstTime;
+    }
+}
 
 
 
