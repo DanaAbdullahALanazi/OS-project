@@ -64,33 +64,62 @@ public static void main(String[] args) {
 //call this method inside case1?
 public static void RRScheduling(List<PCB> Q1) {
     int quantum = 3; // Time quantum for Round-Robin scheduling
-
     double currentTime = 0;
 
     // Queue to store processes that have arrived but not yet executed in this time slice
-    Queue<PCB> readyQueue = new LinkedList<>(Q1);
+    Queue<PCB> readyQueue = new LinkedList<>();
+
+    // Map to store the remaining burst time of each process
+    Map<PCB, Double> remainingBurstTime = new HashMap<>();
+
+    // Initialize the remaining burst time for each process
+    for (PCB process : Q1) {
+        remainingBurstTime.put(process, process.getCpuBurstTime());
+    }
 
     // Loop until all processes in Q1 are executed
-    while (!readyQueue.isEmpty()) {
-        PCB currentProcess = readyQueue.poll();
+    while (!remainingBurstTime.isEmpty()) {
+        for (PCB process : Q1) {
+            if (remainingBurstTime.containsKey(process)) {
+                double burstTime = remainingBurstTime.get(process);
 
-        // Record the start time of the process
-        currentProcess.startingTime = currentTime;
+                // Record the start time of the process
+                process.startingTime = currentTime;
 
-        // Simulate executing the process for one time quantum
-        double executionTime = Math.min(quantum, currentProcess.cpuBurstTime);
-        currentTime += executionTime;
-        currentProcess.cpuBurstTime -= executionTime;
+                // Simulate executing the process for one time quantum
+                double executionTime = Math.min(quantum, burstTime);
+                currentTime += executionTime;
+                remainingBurstTime.put(process, burstTime - executionTime);
 
-        // If the process is not finished, put it back in the ready queue
-        if (currentProcess.cpuBurstTime > 0) {
-            readyQueue.offer(currentProcess);
+                // If the process is finished, calculate termination time, turnaround time, waiting time
+                if (burstTime <= quantum) {
+                    process.terminationTime = currentTime;
+                    process.turnAroundTime = process.terminationTime - process.arrivalTime;
+                    process.waitingTime = process.turnAroundTime - process.getCpuBurstTime();
+                    remainingBurstTime.remove(process);
+                }
+
+                // Handle processes arriving simultaneously
+                for (PCB newProcess : Q1) {
+                    if (!remainingBurstTime.containsKey(newProcess) && newProcess.getArrivalTime() <= currentTime) {
+                        readyQueue.offer(newProcess);
+                        remainingBurstTime.put(newProcess, newProcess.getCpuBurstTime());
+                    }
+                }
+
+                // Put the process back in the ready queue if it's not finished
+                if (burstTime > quantum) {
+                    readyQueue.offer(process);
+                }
+            }
         }
 
-        // Update termination time, turnaround time, waiting time
-        currentProcess.terminationTime = currentTime;
-        currentProcess.turnAroundTime = currentProcess.terminationTime - currentProcess.arrivalTime;
-        currentProcess.waitingTime = currentProcess.turnAroundTime - currentProcess.cpuBurstTime;
+        // Move processes from ready queue to execution
+        while (!readyQueue.isEmpty()) {
+            PCB nextProcess = readyQueue.poll();
+            Q1.remove(nextProcess);
+            Q1.add(nextProcess); // Move the process to the end of the queue to simulate Round-Robin
+        }
     }
 }
 
