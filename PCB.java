@@ -25,6 +25,34 @@ public PCB(String ProcessID,double cpuBurstTime,double startingTime,double termi
     //this.performanceTime=startingTime-arrivalTime;
 }
 
+public String getProcessID(){
+    return ProcessID; }
+public int getProcessPriority(){
+    return processPriority;
+}
+public double getArrivalTime(){
+    return arrivalTime ;
+}
+public double getCpuBurstTime(){
+    return cpuBurstTime;
+}
+public double getStartingTime() {
+return startingTime ;
+}
+public double getTerminationTime() {
+	return terminationTime;
+}
+public double getTurnAroundTime() {
+	return turnAroundTime ; 
+}
+
+public double getWaitingTime() {
+	return waitingTime ; 
+}
+
+public double getPerformanceTime() {
+	return performanceTime ; 
+}
 
 public void SJFScheduling( List <PCB> Q2){
         
