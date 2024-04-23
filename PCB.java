@@ -5,13 +5,15 @@ private String ProcessID;
 private int processPriority;
 private double arrivalTime;
 private double cpuBurstTime;
+
+// الاتربيوت الي تحت تنحسب جوا الميثودز sjf + rr
 private double startingTime;
 private double terminationTime; 
 private double turnAroundTime; //turnaroundTime=terminationTime - arrivalTime=cpuBurst+waitingTime
 private double waitingTime; //waitingTime=turnAroundTime – cpuBurstTime
 private double performanceTime; //performanceTime=StartingTime - ArrivalTime
 
-public PCB(String ProcessID,double cpuBurstTime,double startingTime,double terminationTime){
+public PCB(String ProcessID,double cpuBurstTime,double startingTime,double terminationTime){ //change parameters
     this.ProcessID=ProcessID;
     this.cpuBurstTime=cpuBurstTime;
     this.startingTime=startingTime;
@@ -27,6 +29,11 @@ public PCB(String ProcessID,double cpuBurstTime,double startingTime,double termi
 
 public String getProcessID(){
     return ProcessID; }
+
+    public String setProcessID(String id ){
+        ProcessID = id;
+
+    }
 public int getProcessPriority(){
     return processPriority;
 }
@@ -54,7 +61,7 @@ public double getPerformanceTime() {
 	return performanceTime ; 
 }
 
-public void SJFScheduling( List <PCB> Q2){
+public void SJFScheduling( List <PCB> Q2){ // after sorting add it to queue + move this method to driver
         
     double currentTime = 0;
 

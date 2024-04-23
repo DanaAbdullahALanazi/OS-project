@@ -41,8 +41,9 @@ public static void main(String[] args) {
                          
                          //creating a pcb object to schedule it
                          newProcess= new PCB(priorityLvl,processArrivalTime,burstTime);
+                         newProcess.setID("P"+i);
 
-
+                         //add schudling algorthim call
 
                     }//end for 
                     break;
@@ -67,14 +68,13 @@ public static void main(String[] args) {
      }while(choice != 3);
 }//end main
 
-//dana//
-//call this method inside case1?
+
 public static void RRScheduling(List<PCB> Q1) {
     int quantum = 3; // Time quantum for Round-Robin scheduling
     double currentTime = 0;
 
     // Queue to store processes that have arrived but not yet executed in this time slice
-    Queue<PCB> readyQueue = new LinkedList<>();
+    Queue<PCB> readyQueue = new LinkedList<>(); //delete ready queue
 
     // Map to store the remaining burst time of each process
     Map<PCB, Double> remainingBurstTime = new HashMap<>();
@@ -144,7 +144,7 @@ return pID;
 
 
 
-     public static void processesReport(Queue<PCB> queue1, Queue<PCB> queue2){
+     public static void processesReport(Queue<PCB> queue1, Queue<PCB> queue2){ //P1|P2 add 
           double totalTurnaround = 0 ;
           double totalWaitingTime =0;
           double totalResponseTime =0;
