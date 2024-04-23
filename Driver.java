@@ -128,7 +128,7 @@ public static void RRScheduling(List<PCB> Q1) {
             Q1.add(nextProcess); // Move the process to the end of the queue to simulate Round-Robin
         }
     }
-}
+}//end rr method
 
 
 public String validateProcessID(String ID){
@@ -143,7 +143,7 @@ return pID;
 
 
 
-public static void processesReport(){
+
      public static void processesReport(Queue<PCB> queue1, Queue<PCB> queue2){
           double totalTurnaround = 0 ;
           double totalWaitingTime =0;
