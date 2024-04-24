@@ -80,7 +80,7 @@ public static void RRScheduling(Queue<PCB> readyQueue) {
 
     // Loop through the processes in the readyQueue
     while (!readyQueue.isEmpty()) {
-        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the queue
+        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the readyQueue
 
         // Set the starting time for the process
         process.setStartingTime(currentTime);
@@ -96,8 +96,8 @@ public static void RRScheduling(Queue<PCB> readyQueue) {
 
         // Check if the process is not yet finished
         if (remainingTime > timeQuantum) {
-            // Re-add the process to the end of the queue
-            readyQueue.add(process);
+            // Re-add the process to the end of queue1
+            queue1.add(process);
         } else {
             // Calculate termination time, turnaround time, waiting time, and performance time
             process.setTerminationTime(currentTime);
@@ -105,7 +105,7 @@ public static void RRScheduling(Queue<PCB> readyQueue) {
             process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
         }
 
-        // Add the processed process to the cpuExecutionQueue
+        // Add the processed process to the global queue1 (cpuExecutionQueue)
         cpuExecutionQueue.add(process);
     }
 }
