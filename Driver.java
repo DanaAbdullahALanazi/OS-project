@@ -74,13 +74,13 @@ public static void main(String[] args) {
 }//end main
 
 
-public static void RRScheduling(Queue<PCB> readyQueue) {
+public static void RRScheduling() {
     double currentTime = 0;
     double timeQuantum = 3; // Time quantum for Round-Robin
 
-    // Loop through the processes in the readyQueue
-    while (!readyQueue.isEmpty()) {
-        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the readyQueue
+    // Loop through the processes in queue1
+    while (!queue1.isEmpty()) {
+        PCB process = queue1.poll(); // Retrieve and remove the first process from queue1
 
         // Set the starting time for the process
         process.setStartingTime(currentTime);
@@ -103,12 +103,13 @@ public static void RRScheduling(Queue<PCB> readyQueue) {
             process.setTerminationTime(currentTime);
             process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
             process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
-        }
 
-        // Add the processed process to the global queue1 (cpuExecutionQueue)
-        cpuExecutionQueue.add(process);
+            // Add the processed process to the cpuExecutionQueue
+            cpuExecutionQueue.add(process);
+        }
     }
 }
+
 
 
 public static Queue<PCB> SJFScheduling( Queue<PCB> readyQueue ){ // after sorting add it to queue + move this method to driver
