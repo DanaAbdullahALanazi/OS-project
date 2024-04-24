@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 public class Driver {
 public static Scanner input = new Scanner(System.in);
+public static Queue<PCB> cpuExecutionQueue = new LinkedList<>();
 public static void main(String[] args) {
      System.out.println("Welcome to the process scheduling program!");
      int choice ;
