@@ -120,6 +120,38 @@ public static String RRScheduling(Queue<PCB> readyQueue) {
     return schedulingOrder.toString();
 }
 
+public static Queue<PCB> SJFScheduling( Queue<PCB> readyQueue ){ // after sorting add it to queue + move this method to driver
+        
+    // Sort the processes based on CPU burst time
+    List<PCB> sortedProcesses = new ArrayList<>(readyQueue);
+    Collections.sort(sortedProcesses, Comparator.comparingDouble(PCB::getCpuBurstTime));
+
+    //store the sorted processes in a "Queue" type 
+    Queue<PCB> Q2 = new LinkedList<>(sortedProcesses);
+
+    double currentTime = 0;
+
+    // loop through processes
+    for (PCB process : Q2){
+
+        //the start time for the process
+        process.setStartingTime(currentTime);
+
+        currentTime += process.getCpuBurstTime();
+
+        //calculate termination time, performance time, turn around time and waiting time
+        process.setTerminationTime(currentTime);
+        process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
+        process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
+        process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime()); 
+       }
+
+
+
+    return Q2;
+
+}
+
 
 
 public primitivePriorityScheduling(Queue<PCB> readyQueue){
