@@ -9,6 +9,8 @@ import java.io.IOException;
 public class Driver {
 public static Scanner input = new Scanner(System.in);
 public static Queue<PCB> cpuExecutionQueue = new LinkedList<>();
+public static Queue<PCB> Queue2 = new LinkedList<>();
+
 public static void main(String[] args) {
      System.out.println("Welcome to the process scheduling program!");
      int choice ;
@@ -19,7 +21,7 @@ public static void main(String[] args) {
      PCB newProcess;
      Queue<PCB> readyQueue = new LinkedList<>();
      Queue<PCB> Queue1 = new LinkedList<>();
-     Queue<PCB> Queue2 = new LinkedList<>();
+     //Queue<PCB> Queue2 = new LinkedList<>();
      do{
           System.out.println("Please choose an option:");
           System.out.println("1. Enter process' information.");
@@ -112,19 +114,19 @@ public static void RRScheduling() {
 
 
 
-public static Queue<PCB> SJFScheduling( Queue<PCB> readyQueue ){ // after sorting add it to queue + move this method to driver
+public static void SJFScheduling(){ 
         
     // Sort the processes based on CPU burst time
-    List<PCB> sortedProcesses = new ArrayList<>(readyQueue);
+    List<PCB> sortedProcesses = new ArrayList<>(Queue2);
     Collections.sort(sortedProcesses, Comparator.comparingDouble(PCB::getCpuBurstTime));
 
     //store the sorted processes in a "Queue" type 
-    Queue<PCB> Q2 = new LinkedList<>(sortedProcesses);
+    Queue2 = new LinkedList<>(sortedProcesses);
 
     double currentTime = 0;
 
     // loop through processes
-    for (PCB process : Q2){
+    for (PCB process : Queue2){
 
         //the start time for the process
         process.setStartingTime(currentTime);
@@ -136,11 +138,12 @@ public static Queue<PCB> SJFScheduling( Queue<PCB> readyQueue ){ // after sortin
         process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
         process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
         process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime()); 
+
+        //add each process after execution to cpuExecutionQueue 
+        cpuExecutionQueue.add(process);
+
        }
 
-
-
-    return Q2;
 
 }
 
