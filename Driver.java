@@ -73,66 +73,53 @@ public static void main(String[] args) {
 }//end main
 
 
-public static void RRScheduling(List<PCB> Q1) {
-    int quantum = 3; // Time quantum for Round-Robin scheduling
+public static String RRScheduling(Queue<PCB> readyQueue) {
+    StringBuilder schedulingOrder = new StringBuilder(); // Use StringBuilder for efficiency
+
     double currentTime = 0;
+    double timeQuantum = 3; // Time quantum for Round-Robin
 
-    // Queue to store processes that have arrived but not yet executed in this time slice
+    // Loop through the processes in the readyQueue
+    while (!readyQueue.isEmpty()) {
+        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the queue
 
+        // Set the starting time for the process
+        process.setStartingTime(currentTime);
 
-    // Map to store the remaining burst time of each process
-    Map<PCB, Double> remainingBurstTime = new HashMap<>();
+        // Determine the remaining time for the process
+        double remainingTime = process.getCpuBurstTime();
 
-    // Initialize the remaining burst time for each process
-    for (PCB process : Q1) {
-        remainingBurstTime.put(process, process.getCpuBurstTime());
-    }
+        // Process the time quantum or the remaining time, whichever is smaller
+        double processingTime = Math.min(timeQuantum, remainingTime);
 
-    // Loop until all processes in Q1 are executed
-    while (!remainingBurstTime.isEmpty()) {
-        for (PCB process : Q1) {
-            if (remainingBurstTime.containsKey(process)) {
-                double burstTime = remainingBurstTime.get(process);
+        // Update the current time
+        currentTime += processingTime;
 
-                // Record the start time of the process
-                process.startingTime = currentTime;
+        // Update the scheduling order
+        schedulingOrder.append(process.getProcessID()).append(" | ");
 
-                // Simulate executing the process for one time quantum
-                double executionTime = Math.min(quantum, burstTime);
-                currentTime += executionTime;
-                remainingBurstTime.put(process, burstTime - executionTime);
-
-                // If the process is finished, calculate termination time, turnaround time, waiting time
-                if (burstTime <= quantum) {
-                    process.terminationTime = currentTime;
-                    process.turnAroundTime = process.terminationTime - process.arrivalTime;
-                    process.waitingTime = process.turnAroundTime - process.getCpuBurstTime();
-                    remainingBurstTime.remove(process);
-                }
-
-                // Handle processes arriving simultaneously
-                for (PCB newProcess : Q1) {
-                    if (!remainingBurstTime.containsKey(newProcess) && newProcess.getArrivalTime() <= currentTime) {
-                        readyQueue.offer(newProcess);
-                        remainingBurstTime.put(newProcess, newProcess.getCpuBurstTime());
-                    }
-                }
-
-                // Put the process back in the ready queue if it's not finished
-                if (burstTime > quantum) {
-                    readyQueue.offer(process);
-                }
-            }
-        }
-
-        // Move processes from ready queue to execution
-        while (!readyQueue.isEmpty()) {
-            PCB nextProcess = readyQueue.poll();
-            Q1.remove(nextProcess);
-            Q1.add(nextProcess); // Move the process to the end of the queue to simulate Round-Robin
+        // Check if the process is not yet finished
+        if (remainingTime > timeQuantum) {
+            // Re-add the process to the end of the queue
+            readyQueue.add(process);
+        } else {
+            // Calculate termination time, turnaround time, waiting time, and performance time
+            process.setTerminationTime(currentTime);
+            process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
+            process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
+            process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime());
         }
     }
-}//end rr method
+
+    // Remove the last " | " from the scheduling order if it's not empty
+    if (schedulingOrder.length() > 0) {
+        schedulingOrder.setLength(schedulingOrder.length() - 3);
+    }
+
+    // Return the scheduling order string
+    return schedulingOrder.toString();
+}
+
 
 
 public primitivePriorityScheduling(Queue<PCB> readyQueue){
