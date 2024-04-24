@@ -16,6 +16,9 @@ public static void main(String[] args) {
      double processArrivalTime;
      double burstTime;
      PCB newProcess;
+     Queue<PCB> readyQueue = new LinkedList<>();
+     Queue<PCB> Queue1 = new LinkedList<>();
+     Queue<PCB> Queue2 = new LinkedList<>();
      do{
           System.out.println("Please choose an option:");
           System.out.println("1. Enter process' information.");
@@ -31,7 +34,7 @@ public static void main(String[] args) {
                     case 1 : //entering process' info
                     System.out.println("Please enter the number of processes to be scheduled:");
                     processesNum = input.nextInt();
-                    for(int i = 1 ; i<=processesNum ; i++){
+                     for(int i = 1 ; i<=processesNum ; i++){
                          System.out.println("Please enter the priority of process "+i+" :");
                          priorityLvl = input.nextInt();
                          System.out.println("Please enter the arrival time of process "+i+" :");
@@ -42,10 +45,11 @@ public static void main(String[] args) {
                          //creating a pcb object to schedule it
                          newProcess= new PCB(priorityLvl,processArrivalTime,burstTime);
                          newProcess.setID("P"+i);
-
+                         readyQueue.add(newProcess);
+                         primitivePriorityScheduling(readyQueue);
                          //add schudling algorthim call
+                         }//end for
 
-                    }//end for 
                     break;
 
 
@@ -74,7 +78,7 @@ public static void RRScheduling(List<PCB> Q1) {
     double currentTime = 0;
 
     // Queue to store processes that have arrived but not yet executed in this time slice
-    Queue<PCB> readyQueue = new LinkedList<>(); //delete ready queue
+
 
     // Map to store the remaining burst time of each process
     Map<PCB, Double> remainingBurstTime = new HashMap<>();
@@ -131,17 +135,16 @@ public static void RRScheduling(List<PCB> Q1) {
 }//end rr method
 
 
-public String validateProcessID(String ID){
-int pNum = Integer.parseInt(ID.substring(1));
-String pID=ID;
-while(ID.charAt(0)!='P'||pNum<1||pNum>100){
-     pID= scanner.next();
-     pNum = Integer.parseInt(pID.substring(1));
+public primitivePriorityScheduling(Queue<PCB> readyQueue){
+for (PCB process : readyQueue) {
+    if(process.getProcessPriority()=1)
+    queue1.add(process);
+    else 
+    queue2.add(process);
 }
-return pID;
-}//end validateProcessID()
 
 
+}
 
 
      public static void processesReport(Queue<PCB> queue1, Queue<PCB> queue2){ //P1|P2 add 

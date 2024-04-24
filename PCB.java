@@ -13,27 +13,16 @@ private double turnAroundTime; //turnaroundTime=terminationTime - arrivalTime=cp
 private double waitingTime; //waitingTime=turnAroundTime – cpuBurstTime
 private double performanceTime; //performanceTime=StartingTime - ArrivalTime
 
-public PCB(String ProcessID,double cpuBurstTime,double startingTime,double terminationTime){ //change parameters
-    this.ProcessID=ProcessID;
+public PCB(int processPriority,double arrivalTime,double cpuBurstTime){ //change parameters
+    this.processPriority=processPriority;
     this.cpuBurstTime=cpuBurstTime;
-    this.startingTime=startingTime;
-    this.terminationTime = 0;
-    this.turnAroundTime = 0;
-    this.waitingTime = 0;
-    this.performanceTime = 0;
-    //this.terminationTime=terminationTime;
-    //this.turnAroundTime=terminationTime-arrivalTime;
-    //this.waitingTime=turnAroundTime-cpuBurstTime;
-    //this.performanceTime=startingTime-arrivalTime;
+    this.cpuBurstTime=cpuBurstTime;
 }
 
 public String getProcessID(){
-    return ProcessID; }
+    return ProcessID; 
+}
 
-    public String setProcessID(String id ){
-        ProcessID = id;
-
-    }
 public int getProcessPriority(){
     return processPriority;
 }
@@ -59,6 +48,36 @@ public double getWaitingTime() {
 
 public double getPerformanceTime() {
 	return performanceTime ; 
+}
+
+public String setProcessID(String id ){
+    ProcessID = id;
+
+}
+
+public double setStartingTime(double startingTime ){
+    this.startingTime = startingTime;
+
+}
+
+public double setTerminationTime(double terminationTime ){
+    this.terminationTime = terminationTime;
+
+}
+
+public double setTurnAroundTime(double turnAroundTime){
+    this.turnAroundTime = turnAroundTime;
+
+}
+
+public double setWaitingTime(double waitingTimev){
+    this.waitingTime = waitingTime;
+
+}
+
+public double setPerformanceTime(double performanceTime){
+    this.performanceTime = performanceTime;
+
 }
 
 public void SJFScheduling( List <PCB> Q2){ // after sorting add it to queue + move this method to driver
