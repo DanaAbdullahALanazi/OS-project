@@ -74,9 +74,7 @@ public static void main(String[] args) {
 }//end main
 
 
-public static String RRScheduling(Queue<PCB> readyQueue) {
-    StringBuilder schedulingOrder = new StringBuilder(); // Use StringBuilder for efficiency
-
+public static void RRScheduling(Queue<PCB> readyQueue) {
     double currentTime = 0;
     double timeQuantum = 3; // Time quantum for Round-Robin
 
@@ -96,9 +94,6 @@ public static String RRScheduling(Queue<PCB> readyQueue) {
         // Update the current time
         currentTime += processingTime;
 
-        // Update the scheduling order
-        schedulingOrder.append(process.getProcessID()).append(" | ");
-
         // Check if the process is not yet finished
         if (remainingTime > timeQuantum) {
             // Re-add the process to the end of the queue
@@ -108,18 +103,13 @@ public static String RRScheduling(Queue<PCB> readyQueue) {
             process.setTerminationTime(currentTime);
             process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
             process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
-            process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime());
         }
-    }
 
-    // Remove the last " | " from the scheduling order if it's not empty
-    if (schedulingOrder.length() > 0) {
-        schedulingOrder.setLength(schedulingOrder.length() - 3);
+        // Add the processed process to the cpuExecutionQueue
+        cpuExecutionQueue.add(process);
     }
-
-    // Return the scheduling order string
-    return schedulingOrder.toString();
 }
+
 
 public static Queue<PCB> SJFScheduling( Queue<PCB> readyQueue ){ // after sorting add it to queue + move this method to driver
         
