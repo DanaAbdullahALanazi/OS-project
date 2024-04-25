@@ -58,7 +58,7 @@ public static void main(String[] args) {
 
 
                     case 2 : //displaying the processes report 
-                    processesReport( queue1 ,  queue2); 
+                    processesReport( Queue1 ,  Queue2); 
 
                     break;
 
