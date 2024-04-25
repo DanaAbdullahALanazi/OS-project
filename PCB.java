@@ -15,6 +15,7 @@ private double performanceTime; //performanceTime=StartingTime - ArrivalTime
 
 public PCB(int processPriority,double arrivalTime,double cpuBurstTime){ //change parameters
     this.processPriority=processPriority;
+    this.arrivalTime=arrivalTime;
     this.cpuBurstTime=cpuBurstTime;
     this.cpuBurstTime=cpuBurstTime;
 }
