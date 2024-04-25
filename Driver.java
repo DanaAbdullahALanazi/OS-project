@@ -159,82 +159,83 @@ for (PCB process : readyQueue) {
 }
 
 
-     public static void processesReport(Queue<PCB> queue1, Queue<PCB> queue2){ //P1|P2 add 
-          double totalTurnaround = 0 ;
-          double totalWaitingTime =0;
-          double totalResponseTime =0;
-          double numberOfProcesses = queue1.size()+queue2.size();
+     public static void processesReport(Queue<PCB> Queue1, Queue<PCB> Queue2){ //P1|P2 add 
+        double totalTurnaround = 0 ;
+        double totalWaitingTime =0;
+        double totalResponseTime =0;
+        double numberOfProcesses = Queue1.size()+Queue2.size();
             try {
-                 
+                
                // Delete the existing file if it exists
-                  File file = new File("Report.txt");
-                  if (file.exists()) {
-                      file.delete();
-                  }
+                File file = new File("Report.txt");
+                if (file.exists()) {
+                    file.delete();
+                }
                   // Open the file for writing
-                  FileWriter fileWriter = new FileWriter("Report.txt");
-                  BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-     
+                FileWriter fileWriter = new FileWriter("Report.txt");
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+    
                   // Write and print data from queue1 RR
-                  for (PCB pcb : queue1) {
-                      String data = "Process ID: " + pcb.getProcessID() +
-                             ", Process Priority: " + pcb.getProcessPriority() +
-                             ", Arrival Time: " + pcb.getArrivalTime()+"ms" +
-                             ", CPU Burst Time: " + pcb.getCpuBurstTime() +"ms" +
-                             ", Starting Time: " + pcb.getStartingTime()+"ms" +
-                             ", Termination Time: " + pcb.getTerminationTime()+"ms" +
-                             ", Turnaround Time: " + pcb.getTurnAroundTime()+"ms" +
-                             ", Waiting Time: " + pcb.getWaitingTime()+"ms" +
-                             ", Response Time: " + pcb.getPerformanceTime() +"ms";
-                      bufferedWriter.write(data);
-                      bufferedWriter.newLine();
+                for (PCB pcb : Queue1) {
+                    String data = "Process ID: " + pcb.getProcessID() +
+                            ", Process Priority: " + pcb.getProcessPriority() +
+                            ", Arrival Time: " + pcb.getArrivalTime()+"ms" +
+                            ", CPU Burst Time: " + pcb.getCpuBurstTime() +"ms" +
+                            ", Starting Time: " + pcb.getStartingTime()+"ms" +
+                            ", Termination Time: " + pcb.getTerminationTime()+"ms" +
+                            ", Turnaround Time: " + pcb.getTurnAroundTime()+"ms" +
+                            ", Waiting Time: " + pcb.getWaitingTime()+"ms" +
+                            ", Response Time: " + pcb.getPerformanceTime() +"ms";
+                    bufferedWriter.write(data);
+                    bufferedWriter.newLine();
                       System.out.println(data); // Print to console
-                      totalTurnaround += pcb.getTurnAroundTime();
-                      totalWaitingTime += pcb.getWaitingTime();
-                      totalResponseTime += pcb.getPerformanceTime();
-                     
-                      
-                      
-                  }//end for
-     
+                    totalTurnaround += pcb.getTurnAroundTime();
+                    totalWaitingTime += pcb.getWaitingTime();
+                    totalResponseTime += pcb.getPerformanceTime();
+                    
+                    
+                    
+                }//end for
+    
                   // Write and print data from queue2 SJF
-                  for (PCB pcb : queue2) {
-                      String data =  "Process ID: " + pcb.getProcessID() +
-                             ", Process Priority: " + pcb.getProcessPriority() +
-                             ", Arrival Time: " + pcb.getArrivalTime()+"ms" +
-                             ", CPU Burst Time: " + pcb.getCpuBurstTime() +"ms" +
-                             ", Starting Time: " + pcb.getStartingTime()+"ms" +
-                             ", Termination Time: " + pcb.getTerminationTime()+"ms" +
-                             ", Turnaround Time: " + pcb.getTurnAroundTime()+"ms" +
-                             ", Waiting Time: " + pcb.getWaitingTime()+"ms" +
-                             ", Response Time: " + pcb.getPerformanceTime() +"ms";
-                      bufferedWriter.write(data);
-                      bufferedWriter.newLine();
+                for (PCB pcb : Queue2) {
+                    String data =  "Process ID: " + pcb.getProcessID() +
+                            ", Process Priority: " + pcb.getProcessPriority() +
+                            ", Arrival Time: " + pcb.getArrivalTime()+"ms" +
+                            ", CPU Burst Time: " + pcb.getCpuBurstTime() +"ms" +
+                            ", Starting Time: " + pcb.getStartingTime()+"ms" +
+                            ", Termination Time: " + pcb.getTerminationTime()+"ms" +
+                            ", Turnaround Time: " + pcb.getTurnAroundTime()+"ms" +
+                            ", Waiting Time: " + pcb.getWaitingTime()+"ms" +
+                            ", Response Time: " + pcb.getPerformanceTime() +"ms";
+                    bufferedWriter.write(data);
+                    bufferedWriter.newLine();
                       System.out.println(data); // Print to console
-                      totalTurnaround += pcb.getTurnAroundTime();
-                      totalWaitingTime += pcb.getWaitingTime();
-                      totalResponseTime += pcb.getPerformanceTime();
-                  }//end for
-                  
+                    totalTurnaround += pcb.getTurnAroundTime();
+                    totalWaitingTime += pcb.getWaitingTime();
+                    totalResponseTime += pcb.getPerformanceTime();
+                }//end for
+                
                   //Processes average calculations
-                  double averTurnaround = totalTurnaround/numberOfProcesses;
-                  double averWaitingTime = totalWaitingTime/numberOfProcesses;
-                  double averResponseTime = totalResponseTime/numberOfProcesses;
-                  String calculation = "Average turnaround time for all processes in the system is : "+ averTurnaround +"ms\n" +
+                double averTurnaround = totalTurnaround/numberOfProcesses;
+                double averWaitingTime = totalWaitingTime/numberOfProcesses;
+                double averResponseTime = totalResponseTime/numberOfProcesses;
+                String calculation = "Average turnaround time for all processes in the system is : "+ averTurnaround +"ms\n" +
                             "Average waiting time for all processes in the system is : "+averWaitingTime +"ms\n"
                             +"Average response time for all processes in the system is : "+averResponseTime +"ms\n";
-                  bufferedWriter.write(calculation);
-                 bufferedWriter.newLine();
-                 System.out.println(calculation);
-                  
+                bufferedWriter.write(calculation);
+                bufferedWriter.newLine();
+                System.out.println(calculation);
+                
                   // Close the Report file
-                  bufferedWriter.close();
-              
-              } catch (IOException e) {
-                  System.err.println("Error writing to file: " + e.getMessage());
-              }//end catch
-          
-          
-     }//end report method
+                bufferedWriter.close();
+            
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + e.getMessage());
+            }//end catch
+        
+        
+    }//end report method
 
 }//end driver class
+
