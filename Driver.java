@@ -10,6 +10,7 @@ public class Driver {
 public static Scanner input = new Scanner(System.in);
 public static Queue<PCB> cpuExecutionQueue = new LinkedList<>();
 public static Queue<PCB> Queue2 = new LinkedList<>();
+public static Queue<PCB> Queue1 = new LinkedList<>(); //I declared it here as static (dana)
 
 public static void main(String[] args) {
     System.out.println("Welcome to the process scheduling program!");
@@ -20,13 +21,11 @@ public static void main(String[] args) {
     double burstTime;
     PCB newProcess;
     Queue<PCB> readyQueue = new LinkedList<>();
-    Queue<PCB> Queue1 = new LinkedList<>();
      //Queue<PCB> Queue2 = new LinkedList<>();
     do{
         System.out.println("Please choose an option:");
         System.out.println("1. Enter process' information.");
-        System.out.println("2. Displaying a detailed report about each process\nand
-        diffrenet shculing critera.");
+        System.out.println("2. Displaying a detailed report about each process\nand diffrenet shculing critera.");
         System.out.println("3. Exit the program.");
         System.out.print("Enter your choice:");
 			choice = input.nextInt();
@@ -47,7 +46,7 @@ public static void main(String[] args) {
                         
                          //creating a pcb object to schedule it
                         newProcess= new PCB(priorityLvl,processArrivalTime,burstTime);
-                        newProcess.setID("P"+i);
+                        newProcess.setProcessID("P"+i);//changed it to setProcessID instead of setID (dana)
                         readyQueue.add(newProcess);
                         primitivePriorityScheduling(readyQueue);
                          //add schudling algorthim call
@@ -81,7 +80,7 @@ public static void RRScheduling() {
     double timeQuantum = 3; // Time quantum for Round-Robin
 
     // Loop through the processes in queue1
-    while (!queue1.isEmpty()) {
+    while (!Queue1.isEmpty()) {
         PCB process = Queue1.poll(); // Retrieve and remove the first process from queue1
 
         // Set the starting time for the process
@@ -148,13 +147,13 @@ public static void SJFScheduling(){
 }
 
 
-
-public primitivePriorityScheduling(Queue<PCB> readyQueue){
+//I added (static) so the call in line 51 can be defined (dana)
+public static void primitivePriorityScheduling(Queue<PCB> readyQueue){
 for (PCB process : readyQueue) {
-    if(process.getProcessPriority()=1)
-    queue1.add(process);
+    if(process.getProcessPriority()==1)//I fixed it to == instead of = (dana)
+    Queue1.add(process);
     else 
-    queue2.add(process);
+    Queue2.add(process);
 }
 
 
