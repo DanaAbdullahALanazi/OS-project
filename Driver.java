@@ -1,7 +1,4 @@
 import java.util.*;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Iterator;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,56 +18,97 @@ public static void main(String[] args) {
      double burstTime;
      PCB newProcess;
 
-     do{
-          System.out.println("Please choose an option:");
-          System.out.println("1. Enter process' information.");
-          System.out.println("2. Displaying a detailed report about each process\nand diffrenet shculing critera.");
-           System.out.println("3. Exit the program.");
-           System.out.print("Enter your choice:");
-			choice = input.nextInt();
-			input.nextLine();// for garbage
-          
-               switch(choice){
-                    
-                    case 1 : //entering process' info
+      do {
+            System.out.println("Please choose an option:");
+            System.out.println("1. Enter process' information.");
+            System.out.println("2. Display a detailed report about each process and different scheduling criteria.");
+            System.out.println("3. Exit the program.");
+            System.out.print("Enter your choice: ");
+
+            // Validate choice input
+            while (!input.hasNextInt()) {
+                System.out.println("Invalid input! Please enter an integer value.");
+                input.next();
+            }
+            choice = input.nextInt();
+            input.nextLine(); // Clear the newline character from the input stream
+
+            switch (choice) {
+                case 1:
                     System.out.println("Please enter the number of processes to be scheduled:");
+                    
+                    // Validate processesNum input
+                    processesNum = 0;
+                    while (!input.hasNextInt()) {
+                        System.out.println("Invalid input! Please enter an integer value.");
+                        input.next();
+                    }
                     processesNum = input.nextInt();
-                     for(int i = 1 ; i<=processesNum ; i++){
-                         System.out.println("Please enter the priority of process "+i+" :");
-                         priorityLvl = input.nextInt();
-                         System.out.println("Please enter the arrival time of process "+i+" :");
-                         processArrivalTime = input.nextDouble();
-                         System.out.println("Please enter the CPU burst of process "+i+" :");
-                         burstTime = input.nextDouble();
-                         
-                         //creating a pcb object to schedule it
-                         newProcess= new PCB(priorityLvl,processArrivalTime,burstTime);
-                         newProcess.setProcessID("P"+i);
-                         readyQueue.add(newProcess);
-                         primitivePriorityScheduling();
-                         //add schudling algorthim call
-                         }//end for
+                    input.nextLine(); // Clear the newline character from the input stream
+                    
+                    for (int i = 1; i <= processesNum; i++) {
+                        System.out.println("Please enter the priority of process " + i + ":");
+                        // Validate priorityLvl input
+                        priorityLvl = 1;
+                        boolean validPriority = false;
 
+                        // Validate priorityLvl input
+                        while (!validPriority) {
+                            if (!input.hasNextInt()) {
+                                System.out.println("Invalid input! Please enter an integer value.");
+                                input.next();
+                                continue;
+                            }
+                            priorityLvl = input.nextInt();
+                            input.nextLine(); // Clear the newline character from the input stream
+
+                            if (priorityLvl != 1 && priorityLvl != 2) {
+                                System.out.println("Invalid input! Please enter either 1 or 2.");
+                            } else {
+                                validPriority = true;
+                            }
+                        }
+                        
+                        System.out.println("Please enter the arrival time of process " + i + ":");
+                        // Validate processArrivalTime input
+                        processArrivalTime = 0;
+                        while (!input.hasNextDouble()) {
+                            System.out.println("Invalid input! Please enter a numeric value.");
+                            input.next();
+                        }
+                        processArrivalTime = input.nextDouble();
+                        input.nextLine(); // Clear the newline character from the input stream
+                        
+                        System.out.println("Please enter the CPU burst of process " + i + ":");
+                        // Validate burstTime input
+                        burstTime = 0;
+                        while (!input.hasNextDouble()) {
+                            System.out.println("Invalid input! Please enter a numeric value.");
+                            input.next();
+                        }
+                        burstTime = input.nextDouble();
+                        input.nextLine(); // Clear the newline character from the input stream
+                        
+                        // Creating a PCB object to schedule it
+                        newProcess = new PCB(priorityLvl, processArrivalTime, burstTime);
+                        newProcess.setProcessID("P" + i);
+                        readyQueue.add(newProcess);
+                        primitivePriorityScheduling();
+                        // Add scheduling algorithm call
+                    }
                     break;
 
-
-
-
-                    case 2 : //displaying the processes report 
-                    processesReport( Queue1 ,  Queue2); 
-
+                case 2:
+                    processesReport(Queue1, Queue2);
                     break;
 
-               
-
-                    default:
-				System.out.println("Wrong input! try again" + "\n");
-
-               }
-
-
-
-     }while(choice != 3);
+                default:
+                if (choice != 3) {
+                    System.out.println("Wrong input! Please try again.\n");
+                }
+                break;
+            }
+        } while (choice != 3);
 }//end main
 
 
