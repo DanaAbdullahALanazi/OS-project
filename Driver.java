@@ -82,7 +82,7 @@ public static void RRScheduling() {
 
     // Loop through the processes in queue1
     while (!queue1.isEmpty()) {
-        PCB process = queue1.poll(); // Retrieve and remove the first process from queue1
+        PCB process = Queue1.poll(); // Retrieve and remove the first process from queue1
 
         // Set the starting time for the process
         process.setStartingTime(currentTime);
@@ -99,7 +99,7 @@ public static void RRScheduling() {
         // Check if the process is not yet finished
         if (remainingTime > timeQuantum) {
             // Re-add the process to the end of queue1
-            queue1.add(process);
+            Queue1.add(process);
         } else {
             // Calculate termination time, turnaround time, waiting time, and performance time
             process.setTerminationTime(currentTime);
