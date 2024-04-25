@@ -70,7 +70,7 @@ public void setTurnAroundTime(double turnAroundTime){
 
 }
 
-public void setWaitingTime(double waitingTimev){
+public void setWaitingTime(double waitingTime){
     this.waitingTime = waitingTime;
 
 }
