@@ -50,32 +50,32 @@ public double getPerformanceTime() {
 	return performanceTime ; 
 }
 
-public String setProcessID(String id ){
+public void setProcessID(String id ){
     ProcessID = id;
 
 }
 
-public double setStartingTime(double startingTime ){
+public void setStartingTime(double startingTime ){
     this.startingTime = startingTime;
 
 }
 
-public double setTerminationTime(double terminationTime ){
+public void setTerminationTime(double terminationTime ){
     this.terminationTime = terminationTime;
 
 }
 
-public double setTurnAroundTime(double turnAroundTime){
+public void setTurnAroundTime(double turnAroundTime){
     this.turnAroundTime = turnAroundTime;
 
 }
 
-public double setWaitingTime(double waitingTimev){
+public void setWaitingTime(double waitingTimev){
     this.waitingTime = waitingTime;
 
 }
 
-public double setPerformanceTime(double performanceTime){
+public void setPerformanceTime(double performanceTime){
     this.performanceTime = performanceTime;
 
 }
