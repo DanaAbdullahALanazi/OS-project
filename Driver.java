@@ -93,13 +93,14 @@ public static void main(String[] args) {
                         newProcess = new PCB(priorityLvl, processArrivalTime, burstTime);
                         newProcess.setProcessID("P" + i);
                         readyQueue.add(newProcess);
-                        primitivePriorityScheduling();
                         // Add scheduling algorithm call
                     }
+                    primitivePriorityScheduling();
+                    RRScheduling();
                     break;
 
                 case 2:
-                    processesReport(Queue1, Queue2);
+                    processesReport();
                     break;
 
                 default:
@@ -165,7 +166,7 @@ public static void SJFScheduling(){
     for (PCB process : Queue2){
 
         //the start time for the process
-        process.setStartingTime(currentTime);
+        process.setStartingTime(currentTime);//all processes will have the startingTime zero? can you fix it?
 
         currentTime += process.getCpuBurstTime();
 
@@ -197,7 +198,7 @@ for (PCB process : readyQueue) {
 }
 
 
-     public static void processesReport(Queue<PCB> Queue1, Queue<PCB> Queue2){ //P1|P2 add 
+/*      public static void processesReport(){ //P1|P2 add 
         double totalTurnaround = 0 ;
         double totalWaitingTime =0;
         double totalResponseTime =0;
@@ -275,7 +276,7 @@ for (PCB process : readyQueue) {
         
     }//end report method
 
-}//end driver class
+}//end driver class       */
 
 //dana 
 public static void processesReport() {
@@ -297,14 +298,14 @@ public static void processesReport() {
         // Write and print data from cpuExecutionQueue
         for (PCB pcb : cpuExecutionQueue) {
             String data = "Process ID: " + pcb.getProcessID() +
-                    ", Process Priority: " + pcb.getProcessPriority() +
-                    ", Arrival Time: " + pcb.getArrivalTime() + "ms" +
-                    ", CPU Burst Time: " + pcb.getCpuBurstTime() + "ms" +
-                    ", Starting Time: " + pcb.getStartingTime() + "ms" +
-                    ", Termination Time: " + pcb.getTerminationTime() + "ms" +
-                    ", Turnaround Time: " + pcb.getTurnAroundTime() + "ms" +
-                    ", Waiting Time: " + pcb.getWaitingTime() + "ms" +
-                    ", Response Time: " + pcb.getPerformanceTime() + "ms";
+                    ", \nProcess Priority: " + pcb.getProcessPriority() +
+                    ", \nArrival Time: " + pcb.getArrivalTime() + "ms" +
+                    ", \nCPU Burst Time: " + pcb.getCpuBurstTime() + "ms" +
+                    ", \nStarting Time: " + pcb.getStartingTime() + "ms" +
+                    ", \nTermination Time: " + pcb.getTerminationTime() + "ms" +
+                    ", \nTurnaround Time: " + pcb.getTurnAroundTime() + "ms" +
+                    ", \nWaiting Time: " + pcb.getWaitingTime() + "ms" +
+                    ", \nResponse Time: " + pcb.getPerformanceTime() + "ms";
             bufferedWriter.write(data);
             bufferedWriter.newLine();
             System.out.println(data); // Print to console
@@ -331,3 +332,5 @@ public static void processesReport() {
         System.err.println("Error writing to file: " + e.getMessage());
     }//end catch
 }
+}
+
