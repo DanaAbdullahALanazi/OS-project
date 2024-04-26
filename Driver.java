@@ -117,17 +117,25 @@ public static void main(String[] args) {
         } while (choice != 3);
 }//end main
 
-     
+
 public static void RRScheduling() {
     int currentTime = 0;
     int timeQuantum = 3; // Time quantum for Round-Robin
 
-    // Loop through the processes in the readyQueue
-    while (!readyQueue.isEmpty()) {
-        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the readyQueue
+    // Keep track of the starting time for each process
+    Map<String, Double> startingTimeMap = new HashMap<>();
+
+    // Loop through the processes in Queue1
+    while (!Queue1.isEmpty()) {
+        PCB process = Queue1.poll(); // Retrieve and remove the first process from Queue1
+
+        // If the process is not in the starting time map, set its starting time
+        if (!startingTimeMap.containsKey(process.getProcessID())) {
+            startingTimeMap.put(process.getProcessID(), (double) currentTime);
+        }
 
         // Set the starting time for the process
-        process.setStartingTime(currentTime);
+        process.setStartingTime(startingTimeMap.get(process.getProcessID()));
 
         // Process the time quantum or the remaining time, whichever is smaller
         int processingTime = Math.min(timeQuantum, process.getRemainingTime());
@@ -140,19 +148,19 @@ public static void RRScheduling() {
 
         // Check if the process is not yet finished
         if (process.getRemainingTime() > 0) {
-            // Re-add the process to the end of readyQueue
-            readyQueue.add(process);
+            // Re-add the process to the end of Queue1
+            Queue1.add(process);
         } else {
             // Calculate termination time
             double terminationTime = currentTime;
             process.setTerminationTime(terminationTime);
 
-             // Calculate turnaround time, waiting time, and performance time
+            // Calculate turnaround time, waiting time, and performance time
             double arrivalTime = process.getArrivalTime();
             double cpuBurstTime = process.getCpuBurstTime();
             double turnAroundTime = terminationTime - arrivalTime;
             double waitingTime = turnAroundTime - cpuBurstTime;
-            double performanceTime = process.getStartingTime() - arrivalTime;
+            double performanceTime = startingTimeMap.get(process.getProcessID()) - arrivalTime;
 
             // Set calculated attributes
             process.setTurnAroundTime(turnAroundTime);
@@ -164,6 +172,7 @@ public static void RRScheduling() {
         cpuExecutionQueue.add(process);
     }
 }
+
 
 
 
