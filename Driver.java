@@ -125,7 +125,7 @@ public static void RRScheduling() {
         process.setStartingTime(currentTime);
 
         // Determine the remaining time for the process
-        double remainingTime = process.getCpuBurstTime();
+        double remainingTime = process.getRemainingTime(); // Get remaining time directly
 
         // Process the time quantum or the remaining time, whichever is smaller
         double processingTime = Math.min(timeQuantum, remainingTime);
@@ -133,19 +133,28 @@ public static void RRScheduling() {
         // Update the current time
         currentTime += processingTime;
 
+
+        // Update the remaining time for the process
+        process.setRemainingTime(remainingTime - processingTime);
+
         // Check if the process is not yet finished
-        if (remainingTime > timeQuantum) {
+        if (remainingTime > 0) {
             // Re-add the process to the end of queue1
             Queue1.add(process);
         } else {
-            // Calculate termination time, turnaround time, waiting time, and performance time
-            process.setTerminationTime(currentTime);
-            process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
-            process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
+            // Calculate termination time
+            double terminationTime = currentTime;
+            process.setTerminationTime(terminationTime);
 
-            // Add the processed process to the cpuExecutionQueue
-            cpuExecutionQueue.add(process);
+            // Calculate turnaround time, waiting time, and response time
+            process.setTurnAroundTime(terminationTime - process.getArrivalTime());
+            process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
+            process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime());
+
+
         }
+                    // Add the processed process to the cpuExecutionQueue
+                    cpuExecutionQueue.add(process);
     }
 }
 
