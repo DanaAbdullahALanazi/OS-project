@@ -214,8 +214,8 @@ for (PCB process : readyQueue) {
 }
 
 
-
-public static void processesReport() {
+// suggested method (dana)
+/*public static void processesReport() {
     double totalTurnaround = 0;
     double totalWaitingTime = 0;
     double totalResponseTime = 0;
@@ -284,4 +284,91 @@ public static void processesReport() {
     }//end catch
 }
 }
+
+//public static void processesReport() {
+    double totalTurnaround = 0;
+    double totalWaitingTime = 0;
+    double totalResponseTime = 0;
+    double numberOfProcesses = cpuExecutionQueue.size();
+    StringBuilder order = new StringBuilder("The scheduling order of the processes : [");
+    int count = 0;
+
+    try {
+        // Delete the existing file if it exists
+        File file = new File("Report.txt");
+        if (file.exists()) {
+            file.delete();
+        }
+        // Open the file for writing
+        FileWriter fileWriter = new FileWriter("Report.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        
+        // Iterate over the CPU execution queue to print scheduling order
+        for (PCB pcb : cpuExecutionQueue) {
+            // Append process ID to the order string
+            order.append(pcb.getProcessID());
+            // Add separator '|' if it's not the last process
+            if (count < numberOfProcesses - 1) {
+                order.append(" | ");
+            }
+            count++;
+        }
+        order.append("]");
+        
+        // Write scheduling order to the file
+        bufferedWriter.write(order.toString());
+        bufferedWriter.newLine();
+        System.out.println(order);
+        
+        // Iterate over the CPU execution queue to print process information
+        for (PCB pcb : cpuExecutionQueue) {
+            // Write process information to the file
+            bufferedWriter.write("Process ID: " + pcb.getProcessID() +
+                    " \nProcess Priority: " + pcb.getProcessPriority() +
+                    " \nArrival Time: " + pcb.getArrivalTime() + "ms" +
+                    " \nCPU Burst Time: " + pcb.getCpuBurstTime() + "ms" +
+                    " \nStarting Time: " + pcb.getStartingTime() + "ms" +
+                    " \nTermination Time: " + pcb.getTerminationTime() + "ms" +
+                    " \nTurnaround Time: " + pcb.getTurnAroundTime() + "ms" +
+                    " \nWaiting Time: " + pcb.getWaitingTime() + "ms" +
+                    " \nResponse Time: " + pcb.getPerformanceTime() + "ms");
+            bufferedWriter.newLine();
+            // Print process information to console
+            System.out.println("Process ID: " + pcb.getProcessID() +
+                    " \nProcess Priority: " + pcb.getProcessPriority() +
+                    " \nArrival Time: " + pcb.getArrivalTime() + "ms" +
+                    " \nCPU Burst Time: " + pcb.getCpuBurstTime() + "ms" +
+                    " \nStarting Time: " + pcb.getStartingTime() + "ms" +
+                    " \nTermination Time: " + pcb.getTerminationTime() + "ms" +
+                    " \nTurnaround Time: " + pcb.getTurnAroundTime() + "ms" +
+                    " \nWaiting Time: " + pcb.getWaitingTime() + "ms" +
+                    " \nResponse Time: " + pcb.getPerformanceTime() + "ms");
+
+            // Add metrics to total values for average calculation
+            totalTurnaround += pcb.getTurnAroundTime();
+            totalWaitingTime += pcb.getWaitingTime();
+            totalResponseTime += pcb.getPerformanceTime();
+        }
+
+        // Calculate average metrics
+        double averTurnaround = totalTurnaround / numberOfProcesses;
+        double averWaitingTime = totalWaitingTime / numberOfProcesses;
+        double averResponseTime = totalResponseTime / numberOfProcesses;
+
+        // Write average metrics to the file
+        String calculation = "Average turnaround time for all processes in the system is : " + averTurnaround + "ms\n" +
+                "Average waiting time for all processes in the system is : " + averWaitingTime + "ms\n" +
+                "Average response time for all processes in the system is : " + averResponseTime + "ms\n";
+        bufferedWriter.write(calculation);
+        bufferedWriter.newLine();
+        System.out.println(calculation);
+
+        // Close the Report file
+        bufferedWriter.close();
+
+    } catch (IOException e) {
+        System.err.println("Error writing to file: " + e.getMessage());
+    }
+}*/
+
 
