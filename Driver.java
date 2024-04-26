@@ -97,6 +97,7 @@ public static void main(String[] args) {
                     }
                     primitivePriorityScheduling();
                     RRScheduling();
+                    SJFScheduling();
                     break;
 
                 case 2:
@@ -176,44 +177,50 @@ public static void RRScheduling() {
 
 
 
-public static void SJFScheduling(){ 
-        
-    // Sort the processes based on CPU burst time
-    List<PCB> sortedProcesses = new ArrayList<>(Queue2);
-    Collections.sort(sortedProcesses, Comparator.comparingDouble(PCB::getCpuBurstTime));
+public static void SJFScheduling() {
 
-    //restore the processes in the "Queue2" variable after sorting  
-    Queue2 = new LinkedList<>(sortedProcesses);
-
-    double currentTime = 0;
-
+    double currentTime;
+  
     PCB lastProcessExecuted = null;
-        for (PCB process : cpuExecutionQueue) {
-            lastProcessExecuted = process;
-        }       
-        currentTime = lastProcessExecuted.getTerminationTime();
 
-    // loop through processes
-    for (PCB process : Queue2){
+    //find the last process in the cpuExecutionQueue to assign it's Termination time to the current time
+    for (PCB process : cpuExecutionQueue) {
+      lastProcessExecuted = process;
+    }
+    if (lastProcessExecuted != null) {
+      currentTime = lastProcessExecuted.getTerminationTime();
+      //if no processes gone through the Q1
+    } else {
+      currentTime = 0;
+    }
+  
+    // Loop through the processes in Queue2
+    while (!Queue2.isEmpty()) {
 
-        //the start time for the process
-        process.setStartingTime(currentTime);//all processes will have the startingTime zero? can you fix it?
+     //if the arrival times are the same of a two processes then determine the one with the shortest burst
+      PCB currentProcess = Queue2.stream().min(Comparator.comparingDouble(PCB::getArrivalTime).thenComparingDouble(PCB::getCpuBurstTime)).get();
 
-        currentTime += process.getCpuBurstTime();
-
-        //calculate termination time, performance time, turn around time and waiting time
-        process.setTerminationTime(currentTime);
-        process.setTurnAroundTime(process.getTerminationTime() - process.getArrivalTime());
-        process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
-        process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime()); 
-
-        //add each process after execution to cpuExecutionQueue 
-        cpuExecutionQueue.add(process);
-
-       }
-
-
-}
+      // remove the currently executing process to make sure each one is processed only once 
+      Queue2.remove(currentProcess); 
+  
+      // Set starting time for the current process
+      currentProcess.setStartingTime(currentTime);
+  
+      // Update remaining burst time and calculate termination time
+      currentTime += currentProcess.getCpuBurstTime();
+      //tracking the completion a process
+      currentProcess.setRemainingTime(0);
+      currentProcess.setTerminationTime(currentTime);
+  
+      // Calculate turnaround time, waiting time, and performance time
+      currentProcess.setTurnAroundTime(currentProcess.getTerminationTime() - currentProcess.getArrivalTime());
+      currentProcess.setWaitingTime(currentProcess.getTurnAroundTime() - currentProcess.getCpuBurstTime());
+      currentProcess.setPerformanceTime(currentProcess.getStartingTime() - currentProcess.getArrivalTime());
+  
+      // Add the processed PCB to the cpuExecutionQueue
+      cpuExecutionQueue.add(currentProcess);
+    }
+  }
 
 
 
