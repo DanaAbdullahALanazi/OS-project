@@ -117,49 +117,39 @@ public static void main(String[] args) {
         } while (choice != 3);
 }//end main
 
-
+     
 public static void RRScheduling() {
     int currentTime = 0;
     int timeQuantum = 3; // Time quantum for Round-Robin
 
-    // Loop through the processes in queue1
-    while (!Queue1.isEmpty()) {
-        PCB process = Queue1.poll(); // Retrieve and remove the first process from queue1
+    // Loop through the processes in the readyQueue
+    while (!readyQueue.isEmpty()) {
+        PCB process = readyQueue.poll(); // Retrieve and remove the first process from the readyQueue
 
         // Set the starting time for the process
         process.setStartingTime(currentTime);
 
-        // Determine the remaining time for the process
-        int remainingTime = process.getRemainingTime(); // Get remaining time directly
-
         // Process the time quantum or the remaining time, whichever is smaller
-        int processingTime = Math.min(timeQuantum, remainingTime);
+        int processingTime = Math.min(timeQuantum, process.getRemainingTime());
 
         // Update the current time
         currentTime += processingTime;
 
-
         // Update the remaining time for the process
-        process.setRemainingTime(remainingTime - processingTime);
+        process.setRemainingTime(process.getRemainingTime() - processingTime);
 
         // Check if the process is not yet finished
-        if (remainingTime > 0) {
-            // Re-add the process to the end of queue1
-            Queue1.add(process);
+        if (process.getRemainingTime() > 0) {
+            // Re-add the process to the end of readyQueue
+            readyQueue.add(process);
         } else {
             // Calculate termination time
             double terminationTime = currentTime;
             process.setTerminationTime(terminationTime);
-
-            // Calculate turnaround time, waiting time, and response time
-            process.setTurnAroundTime(terminationTime - process.getArrivalTime());
-            process.setWaitingTime(process.getTurnAroundTime() - process.getCpuBurstTime());
-            process.setPerformanceTime(process.getStartingTime() - process.getArrivalTime());
-
-
         }
-                    // Add the processed process to the cpuExecutionQueue
-                    cpuExecutionQueue.add(process);
+
+        // Add the processed process to the cpuExecutionQueue
+        cpuExecutionQueue.add(process);
     }
 }
 
