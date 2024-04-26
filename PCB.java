@@ -86,8 +86,12 @@ public double getRemainingTime() {
     return remainingTime;
 }
 
-public void setRemainingTime(double d) {
-    remainingTime = d ;
+public void setRemainingTime(int d) {
+  this.remainingTime=d;
+}
+
+public int getRemainingTime() {
+return remainingTime;
 }
 
 
