@@ -214,8 +214,8 @@ for (PCB process : readyQueue) {
 }
 
 
-// suggested method (dana)
-/*public static void processesReport() {
+
+public static void processesReport() {
     double totalTurnaround = 0;
     double totalWaitingTime = 0;
     double totalResponseTime = 0;
@@ -285,7 +285,8 @@ for (PCB process : readyQueue) {
 }
 }
 
-//public static void processesReport() {
+//suggested method (dana)
+/*public static void processesReport() {
     double totalTurnaround = 0;
     double totalWaitingTime = 0;
     double totalResponseTime = 0;
@@ -302,26 +303,17 @@ for (PCB process : readyQueue) {
         // Open the file for writing
         FileWriter fileWriter = new FileWriter("Report.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        
-        // Iterate over the CPU execution queue to print scheduling order
+
+        // Keep track of the last instance of each process type
+        Map<String, PCB> lastProcessMap = new HashMap<>();
+
+        // Iterate over the CPU execution queue to update the last instance of each process type
         for (PCB pcb : cpuExecutionQueue) {
-            // Append process ID to the order string
-            order.append(pcb.getProcessID());
-            // Add separator '|' if it's not the last process
-            if (count < numberOfProcesses - 1) {
-                order.append(" | ");
-            }
-            count++;
+            lastProcessMap.put(pcb.getProcessID(), pcb);
         }
-        order.append("]");
-        
-        // Write scheduling order to the file
-        bufferedWriter.write(order.toString());
-        bufferedWriter.newLine();
-        System.out.println(order);
-        
-        // Iterate over the CPU execution queue to print process information
-        for (PCB pcb : cpuExecutionQueue) {
+
+        // Iterate over the last instance of each process type to print process information
+        for (PCB pcb : lastProcessMap.values()) {
             // Write process information to the file
             bufferedWriter.write("Process ID: " + pcb.getProcessID() +
                     " \nProcess Priority: " + pcb.getProcessPriority() +
@@ -333,6 +325,7 @@ for (PCB process : readyQueue) {
                     " \nWaiting Time: " + pcb.getWaitingTime() + "ms" +
                     " \nResponse Time: " + pcb.getPerformanceTime() + "ms");
             bufferedWriter.newLine();
+
             // Print process information to console
             System.out.println("Process ID: " + pcb.getProcessID() +
                     " \nProcess Priority: " + pcb.getProcessPriority() +
@@ -370,5 +363,3 @@ for (PCB process : readyQueue) {
         System.err.println("Error writing to file: " + e.getMessage());
     }
 }*/
-
-
