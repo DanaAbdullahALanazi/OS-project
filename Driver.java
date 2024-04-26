@@ -173,10 +173,16 @@ public static void SJFScheduling(){
     List<PCB> sortedProcesses = new ArrayList<>(Queue2);
     Collections.sort(sortedProcesses, Comparator.comparingDouble(PCB::getCpuBurstTime));
 
-    //store the sorted processes in a "Queue" type 
+    //restore the processes in the "Queue2" variable after sorting  
     Queue2 = new LinkedList<>(sortedProcesses);
 
     double currentTime = 0;
+
+    PCB lastProcessExecuted = null;
+        for (PCB process : cpuExecutionQueue) {
+            lastProcessExecuted = process;
+        }       
+        currentTime = lastProcessExecuted.getTerminationTime();
 
     // loop through processes
     for (PCB process : Queue2){
