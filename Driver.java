@@ -119,8 +119,8 @@ public static void main(String[] args) {
 
 
 public static void RRScheduling() {
-    double currentTime = 0;
-    double timeQuantum = 3; // Time quantum for Round-Robin
+    int currentTime = 0;
+    int timeQuantum = 3; // Time quantum for Round-Robin
 
     // Loop through the processes in queue1
     while (!Queue1.isEmpty()) {
@@ -130,10 +130,10 @@ public static void RRScheduling() {
         process.setStartingTime(currentTime);
 
         // Determine the remaining time for the process
-        double remainingTime = process.getRemainingTime(); // Get remaining time directly
+        int remainingTime = process.getRemainingTime(); // Get remaining time directly
 
         // Process the time quantum or the remaining time, whichever is smaller
-        double processingTime = Math.min(timeQuantum, remainingTime);
+        int processingTime = Math.min(timeQuantum, remainingTime);
 
         // Update the current time
         currentTime += processingTime;
