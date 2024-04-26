@@ -4,7 +4,7 @@ private String ProcessID;
 private int processPriority;
 private double arrivalTime;
 private double cpuBurstTime;
-private double remainingTime;
+private int remainingTime;
 // الاتربيوت الي تحت تنحسب جوا الميثودز sjf + rr
 private double startingTime;
 private double terminationTime; 
@@ -17,7 +17,7 @@ public PCB(int processPriority,double arrivalTime,double cpuBurstTime){ //change
     this.arrivalTime=arrivalTime;
     this.cpuBurstTime=cpuBurstTime;
     this.cpuBurstTime=cpuBurstTime;
-    this.remainingTime = cpuBurstTime;
+    this.remainingTime = (int)cpuBurstTime;
 
 }
 
@@ -82,9 +82,6 @@ public void setPerformanceTime(double performanceTime){
 
 }
 
-public double getRemainingTime() {
-    return remainingTime;
-}
 
 public void setRemainingTime(int d) {
   this.remainingTime=d;
