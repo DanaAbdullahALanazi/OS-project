@@ -336,6 +336,10 @@ public static void processesReport() {
                     " \nTurnaround Time: " + pcb.getTurnAroundTime() + "ms" +
                     " \nWaiting Time: " + pcb.getWaitingTime() + "ms" +
                     " \nResponse Time: " + pcb.getPerformanceTime() + "ms");
+            
+            // Add a separator line
+            bufferedWriter.write("\n----------------------------------------------------------------\n");
+            System.out.println("----------------------------------------------------------------");
 
             // Add metrics to total values for average calculation
             totalTurnaround += pcb.getTurnAroundTime();
@@ -362,4 +366,5 @@ public static void processesReport() {
     } catch (IOException e) {
         System.err.println("Error writing to file: " + e.getMessage());
     }
-}*/
+}
+*/
