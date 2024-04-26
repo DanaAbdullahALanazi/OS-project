@@ -1,4 +1,3 @@
-import java.util.*;
 
 public class PCB {
 private String ProcessID;
@@ -74,7 +73,7 @@ public void setTurnAroundTime(double turnAroundTime){
 }
 
 public void  setWaitingTime(double waitingTimev){
-    this.waitingTime = waitingTime;
+    this.waitingTime = waitingTimev;
 
 }
 
@@ -83,10 +82,16 @@ public void setPerformanceTime(double performanceTime){
 
 }
 
+public double getRemainingTime() {
+    return remainingTime;
+}
 
-
+public void setRemainingTime(double d) {
+    remainingTime = d ;
+}
 
 
 
 
 }
+
