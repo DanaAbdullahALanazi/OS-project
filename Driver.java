@@ -146,6 +146,18 @@ public static void RRScheduling() {
             // Calculate termination time
             double terminationTime = currentTime;
             process.setTerminationTime(terminationTime);
+
+             // Calculate turnaround time, waiting time, and performance time
+            double arrivalTime = process.getArrivalTime();
+            double cpuBurstTime = process.getCpuBurstTime();
+            double turnAroundTime = terminationTime - arrivalTime;
+            double waitingTime = turnAroundTime - cpuBurstTime;
+            double performanceTime = process.getStartingTime() - arrivalTime;
+
+            // Set calculated attributes
+            process.setTurnAroundTime(turnAroundTime);
+            process.setWaitingTime(waitingTime);
+            process.setPerformanceTime(performanceTime);
         }
 
         // Add the processed process to the cpuExecutionQueue
