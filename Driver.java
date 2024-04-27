@@ -236,9 +236,6 @@ for (PCB process : readyQueue) {
 
 }
 
-
-
-//suggested method (dana)
 public static void processesReport() {
     double totalTurnaround = 0;
     double totalWaitingTime = 0;
