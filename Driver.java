@@ -201,7 +201,7 @@ public static void SJFScheduling() {
      //if the arrival times are the same of a two processes then determine the one with the shortest burst
       PCB currentProcess = Queue2.stream().min(Comparator.comparingDouble(PCB::getArrivalTime).thenComparingDouble(PCB::getCpuBurstTime)).get();
 
-      // remove the currently executing process to make sure each one is processed only once 
+      // remove the  process after executing, to make sure it's not considered in the next iteration 
       Queue2.remove(currentProcess); 
   
       // Set starting time for the current process
