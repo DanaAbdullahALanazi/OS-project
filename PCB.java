@@ -5,14 +5,13 @@ public class PCB {
     private double arrivalTime;
     private double cpuBurstTime;
     private int remainingTime;
-    // الاتربيوت الي تحت تنحسب جوا الميثودز sjf + rr
     private double startingTime;
     private double terminationTime; 
     private double turnAroundTime; //turnaroundTime=terminationTime - arrivalTime=cpuBurst+waitingTime
     private double waitingTime; //waitingTime=turnAroundTime – cpuBurstTime
     private double performanceTime; //performanceTime=StartingTime - ArrivalTime
     
-    public PCB(int processPriority,double arrivalTime,double cpuBurstTime){ //change parameters
+    public PCB(int processPriority,double arrivalTime,double cpuBurstTime){ 
         this.processPriority=processPriority;
         this.arrivalTime=arrivalTime;
         this.cpuBurstTime=cpuBurstTime;
