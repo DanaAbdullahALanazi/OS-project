@@ -199,17 +199,14 @@ public static void SJFScheduling() {
     while (!Queue2.isEmpty()) {
 
      //if the arrival times are the same of a two processes then determine the one with the shortest burst
-      PCB currentProcess = Queue2.stream().min(Comparator.comparingDouble(PCB::getArrivalTime).thenComparingDouble(PCB::getCpuBurstTime)).get();
-
-      // remove the  process after executing, to make sure it's not considered in the next iteration 
-      Queue2.remove(currentProcess); 
+      PCB currentProcess = Queue2.stream().min(Comparator.comparingDouble(PCB::getArrivalTime).thenComparingDouble(PCB::getCpuBurstTime)).get(); 
   
       // Set starting time for the current process
       currentProcess.setStartingTime(currentTime);
   
-      // Update remaining burst time and calculate termination time
+      //calculate termination time
       currentTime += currentProcess.getCpuBurstTime();
-      //tracking the completion a process
+      //update the remaining burst time
       currentProcess.setRemainingTime(0);
       currentProcess.setTerminationTime(currentTime);
   
@@ -217,6 +214,9 @@ public static void SJFScheduling() {
       currentProcess.setTurnAroundTime(currentProcess.getTerminationTime() - currentProcess.getArrivalTime());
       currentProcess.setWaitingTime(currentProcess.getTurnAroundTime() - currentProcess.getCpuBurstTime());
       currentProcess.setPerformanceTime(currentProcess.getStartingTime() - currentProcess.getArrivalTime());
+
+        // remove the  process after executing, to make sure it's not considered in the next iteration 
+        Queue2.remove(currentProcess);
   
       // Add the processed PCB to the cpuExecutionQueue
       cpuExecutionQueue.add(currentProcess);
