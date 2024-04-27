@@ -1,4 +1,49 @@
-Average turnaround time for all processes in the system is : NaNms
-Average waiting time for all processes in the system is : NaNms
-Average response time for all processes in the system is : NaNms
+The scheduling order of the processes :[P2|P3|P2|P2|P2|P2|P2|P2|P4|P1]
+Process ID: P1 
+Process Priority: 2 
+Arrival Time: 10.0ms 
+CPU Burst Time: 6.0ms 
+Starting Time: 24.0ms 
+Termination Time: 30.0ms 
+Turnaround Time: 20.0ms 
+Waiting Time: 14.0ms 
+Response Time: 14.0ms
+
+----------------------------------------------------------------
+Process ID: P2 
+Process Priority: 1 
+Arrival Time: 3.0ms 
+CPU Burst Time: 20.0ms 
+Starting Time: 0.0ms 
+Termination Time: 21.0ms 
+Turnaround Time: 18.0ms 
+Waiting Time: -2.0ms 
+Response Time: -3.0ms
+
+----------------------------------------------------------------
+Process ID: P3 
+Process Priority: 1 
+Arrival Time: 7.0ms 
+CPU Burst Time: 1.0ms 
+Starting Time: 3.0ms 
+Termination Time: 4.0ms 
+Turnaround Time: -3.0ms 
+Waiting Time: -4.0ms 
+Response Time: -4.0ms
+
+----------------------------------------------------------------
+Process ID: P4 
+Process Priority: 2 
+Arrival Time: 6.0ms 
+CPU Burst Time: 3.0ms 
+Starting Time: 21.0ms 
+Termination Time: 24.0ms 
+Turnaround Time: 18.0ms 
+Waiting Time: 15.0ms 
+Response Time: 15.0ms
+
+----------------------------------------------------------------
+Average turnaround time for all processes in the system is : 13.25ms
+Average waiting time for all processes in the system is : 5.75ms
+Average response time for all processes in the system is : 5.5ms
 
